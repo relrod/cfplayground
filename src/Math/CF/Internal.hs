@@ -1,12 +1,16 @@
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE StandaloneDeriving #-}
+
 module Math.CF.Internal where
 
 import Data.Maybe (fromMaybe, listToMaybe)
 import Data.List (intersperse)
 import Data.Ratio
 
-data CF = CF [Integer] deriving (Eq)
+data CF a = Integral a => CF [a]
+deriving instance Eq (CF a)
 
-instance Show CF where
+instance Show a => Show (CF a) where
   show (CF xs) =
     "[" ++ show (fromMaybe 0 (listToMaybe xs)) ++
     "; " ++ concat (intersperse ", " (map show (drop 1 xs))) ++ "]"
@@ -20,9 +24,9 @@ toCF' (n, d) acc =
     s = (n - (q * d))
     in toCF' (d, s) (q:acc)
 
-toCF :: (Integer, Integer) -> CF
+toCF :: Integral a => (a, a) -> CF a
 toCF n = CF (reverse $ toCF' n [])
 
-fromCF :: Fractional a => CF -> a
+fromCF :: (Integral a, Fractional b) => CF a -> b
 fromCF (CF []) = 0
 fromCF (CF (x:xs)) = fromIntegral x + (1/fromCF (CF xs))
