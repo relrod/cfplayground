@@ -27,6 +27,8 @@ toCF' (n, d) acc =
 toCF :: Integral a => (a, a) -> CF a
 toCF n = CF (reverse $ toCF' n [])
 
-fromCF :: (Integral a, Fractional b) => CF a -> b
-fromCF (CF []) = 0
-fromCF (CF (x:xs)) = fromIntegral x + (1/fromCF (CF xs))
+-- | Convert from a 'CF' to a different representation, potentially subject to
+-- rounding errors and other evilness.
+unsafeFromCF :: (Integral a, Fractional b) => CF a -> b
+unsafeFromCF (CF []) = 0
+unsafeFromCF (CF (x:xs)) = fromIntegral x + (1/unsafeFromCF (CF xs))
