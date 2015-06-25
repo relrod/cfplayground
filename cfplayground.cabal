@@ -1,23 +1,24 @@
 name:                cfplayground
 version:             0.1.0.0
 synopsis:            Playing with continued fractions for exact real arithmetic
--- description:         
+-- description:
 homepage:            https://github.com/relrod/cfplayground/
 license:             BSD2
 license-file:        LICENSE
 author:              Ricky Elrod
 maintainer:          ricky@elrod.me
--- copyright:           
+-- copyright:
 category:            Math
 build-type:          Simple
--- extra-source-files:  
+-- extra-source-files:
 cabal-version:       >=1.10
 
 library
   exposed-modules:
     Math.CF.Internal
-  -- other-modules:       
-  -- other-extensions:    
+  -- other-modules:
+  -- other-extensions:
   build-depends:       base >=4.8 && <4.9
+                     , semigroups >= 0.12
   hs-source-dirs:      src
   default-language:    Haskell2010
